@@ -25,15 +25,35 @@
     </main>
 
     <script>
-      // TODO: Set this to your deployed backend URL, e.g. https://your-app.onrender.com
-      const BACKEND_URL = "https://YOUR-BACKEND-URL";
+      // IMPORTANT: Replace this with your actual deployed backend URL
+      // The Flask backend (app.py) must be deployed to a service like:
+      // - Render (https://render.com)
+      // - Heroku (https://heroku.com)
+      // - Railway (https://railway.app)
+      // Example: const BACKEND_URL = "https://your-app-name.onrender.com";
+      const BACKEND_URL = "";
 
       const form = document.getElementById("uploadForm");
       const status = document.getElementById("status");
       const input = document.getElementById("document");
 
+      // Helper function to check if backend URL is configured
+      const isBackendConfigured = () => Boolean(BACKEND_URL && BACKEND_URL.trim());
+
+      // Show configuration warning if backend URL is not set
+      if (!isBackendConfigured()) {
+        status.textContent = "⚠️ Backend not configured. Please deploy the Flask app and update the BACKEND_URL.";
+        status.style.color = "#d97706";
+      }
+
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+
+        if (!isBackendConfigured()) {
+          status.textContent = "Error: Backend URL not configured. Please deploy the Flask backend and update BACKEND_URL in this file.";
+          status.style.color = "red";
+          return;
+        }
 
         if (!input.files.length) {
           status.textContent = "Please select a .docx file.";
