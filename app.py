@@ -46,7 +46,11 @@ SIGNATURE_LINES = _load_signature_lines()
 FONT_NAME = os.environ.get("FONT_NAME", "Script MT Bold")
 
 app = Flask(__name__)
-CORS(app, resources={r"/upload": {"origins": _load_frontend_origins()}})
+CORS(
+    app,
+    resources={r"/upload": {"origins": _load_frontend_origins()}},
+    expose_headers=["Content-Disposition"],
+)
 
 
 def is_allowed(filename: str) -> bool:
