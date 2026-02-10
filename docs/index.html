@@ -37,8 +37,11 @@
       const status = document.getElementById("status");
       const input = document.getElementById("document");
 
+      // Helper function to check if backend URL is configured
+      const isBackendConfigured = () => Boolean(BACKEND_URL && BACKEND_URL.trim());
+
       // Show configuration warning if backend URL is not set
-      if (!BACKEND_URL || BACKEND_URL.trim() === "") {
+      if (!isBackendConfigured()) {
         status.textContent = "⚠️ Backend not configured. Please deploy the Flask app and update the BACKEND_URL.";
         status.style.color = "#d97706";
       }
@@ -46,7 +49,7 @@
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        if (!BACKEND_URL || BACKEND_URL.trim() === "") {
+        if (!isBackendConfigured()) {
           status.textContent = "Error: Backend URL not configured. Please deploy the Flask backend and update BACKEND_URL in this file.";
           status.style.color = "red";
           return;
