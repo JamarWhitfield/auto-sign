@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #f5f6fa;
+  color: #1f2430;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 40px 16px;
+}
+
+.card {
+  width: min(520px, 100%);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 18px 45px rgba(31, 36, 48, 0.12);
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+}
+
+p {
+  margin: 0 0 20px;
+  line-height: 1.6;
+}
+
+.upload {
+  display: grid;
+  gap: 16px;
+}
+
+.file-input {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px dashed #c6cbd8;
+  border-radius: 12px;
+  background: #f8f9fc;
+  cursor: pointer;
+}
+
+.file-input input {
+  width: 100%;
+}
+
+button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: #3758ff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2c45cc;
+}
+
+.note {
+  margin-top: 12px;
+  color: #5c6372;
+  font-size: 0.95rem;
+}

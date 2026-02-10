@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Auto-Sign Word Doc</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <h1>Auto-Sign Word Document</h1>
+        <p>
+          Upload a .docx file to add the signature on the last page.
+        </p>
+        <form id="uploadForm" class="upload">
+          <label class="file-input">
+            <input type="file" id="document" name="document" accept=".docx" required />
+            <span>Select a Word document</span>
+          </label>
+          <button type="submit">Process document</button>
+        </form>
+        <p id="status" class="note">The processed file will download automatically.</p>
+      </section>
+    </main>
+
+    <script>
+      // TODO: Set this to your deployed backend URL, e.g. https://your-app.onrender.com
+      const BACKEND_URL = "https://YOUR-BACKEND-URL";
+
+      const form = document.getElementById("uploadForm");
+      const status = document.getElementById("status");
+      const input = document.getElementById("document");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!input.files.length) {
+          status.textContent = "Please select a .docx file.";
+          return;
+        }
+
+        status.textContent = "Uploading and processing...";
+
+        try {
+          const formData = new FormData();
+          formData.append("document", input.files[0]);
+
+          const response = await fetch(`${BACKEND_URL}/upload`, {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "Upload failed");
+          }
+
+          const blob = await response.blob();
+          const contentDisposition = response.headers.get("content-disposition");
+          let filename = "reviewed.docx";
+          if (contentDisposition) {
+            const match = contentDisposition.match(/filename="?([^";]+)"?/i);
+            if (match?.[1]) {
+              filename = match[1];
+            }
+          }
+
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          window.URL.revokeObjectURL(url);
+
+          status.textContent = "Done. Your file should have downloaded.";
+          form.reset();
+        } catch (error) {
+          status.textContent = `Error: ${error.message}`;
+        }
+      });
+    </script>
+  </body>
+</html>

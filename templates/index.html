@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Auto-Sign Word Doc</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <h1>Auto-Sign Word Document</h1>
+        <p>
+          Upload a .docx file to add the signature.
+        </p>
+        <form class="upload" method="post" action="/upload" enctype="multipart/form-data">
+          <label class="file-input">
+            <input type="file" name="document" accept=".docx" required />
+            <span>Select a Word document</span>
+          </label>
+          <button type="submit">Process document</button>
+        </form>
+        <p class="note">The processed file will download automatically.</p>
+      </section>
+    </main>
+  </body>
+</html>
